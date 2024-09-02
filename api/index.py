@@ -19,10 +19,6 @@ app = Flask(__name__)
 playfab_cache = {}
 mute_cache = {}
 
-settings.TitleId : str = "1585E"
-settings.SecretKey : str = "3ZS9M7TY5NUZNHIFI9YQIEZJWYBTSN6E884AD6HB3KG8JMP31O"
-settings.ApiKey : str = "OC|7302344786542660|dbf1874a4aa454cdd6142e59ebfd0e55"
-
 def return_function_json(data, funcname, funcparam={}):
     user_id = data["FunctionParameter"]["CallerEntityProfile"]["Lineage"]["TitlePlayerAccountId"]
 
