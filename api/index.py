@@ -6,7 +6,6 @@ app = Flask(__name__)
 title = "1585E"
 secret = "3ZS9M7TY5NUZNHIFI9YQIEZJWYBTSN6E884AD6HB3KG8JMP31O"
 auth_token = "OC|7302344786542660|dbf1874a4aa454cdd6142e59ebfd0e55"
-auth1 = "OC|7302344786542660|dbf1874a4aa454cdd6142e59ebfd0e55"
 coems = {}
 
 
