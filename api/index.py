@@ -37,11 +37,6 @@ def playfab_auth():
         url=f'https://graph.oculus.com/user_nonce_validate?nonce={getjson["Nonce"]}&user_id={getjson["OculusId"]}&access_token={auth_token}',
         headers={"content-type": "application/json"}
     )
-    # If you don't have a second App Lab, remove this
-    response2 = requests.post(
-        url=f'https://graph.oculus.com/user_nonce_validate?nonce={getjson["Nonce"]}&user_id={getjson["OculusId"]}&access_token={auth1}',
-        headers={"content-type": "application/json"}
-    )
 
     if not response1.json().get("is_valid"):
         return jsonify({"Error": "no!", "Message": "no"}), 400
