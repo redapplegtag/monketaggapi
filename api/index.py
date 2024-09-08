@@ -118,26 +118,21 @@ def set_auth_result():
 def generate_random_number():
     return jsonify({"result": f"pluh!{random.randint(1000, 9999)}"})
 
-@app.route("/api/ConsumeOculusIAP", methods=["POST", "GET"])
-def consumeoculusiap():
+@app.route("/api/ConsumeOculusIAP", methods=["POST"])
+def consume_oculus_iap():
     rjson = request.get_json()
 
-    accessToken = rjson.get("userToken")
-    userId = rjson.get("userID")
-    playFabId = rjson.get("playFabId")
+    access_token = rjson.get("userToken")
+    user_id = rjson.get("userID")
     nonce = rjson.get("nonce")
-    platform = rjson.get("platform")
     sku = rjson.get("sku")
-    debugParams = rjson.get("debugParemeters")
 
-    req = requests.post(
-        url=f"https://graph.oculus.com/consume_entitlement?nonce={nonce}&user_id={userId}&sku={sku}&access_token=" + settings.ApiKey,
-        headers={
-            "content-type": "application/json"
-        }
+    response = requests.post(
+        url=f"https://graph.oculus.com/consume_entitlement?nonce={nonce}&user_id={user_id}&sku={sku}&access_token={settings.ApiKey}",
+        headers={"content-type": "application/json"}
     )
 
-    if bool(req.json().get("success")):
+    if response.json().get("success"):
         return jsonify({"result": True})
     else:
         return jsonify({"error": True})
