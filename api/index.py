@@ -26,8 +26,8 @@ app: Flask = Flask(__name__)
 playfabCache: dict = {}
 muteCache: dict = {}
 
-settings.TitleId = "C11BB"
-settings.SecretKey = "DAK4NZC1WK6HKNKSF1PJOGWJJHHOBRG1QQR6UBPNOC1X9R53TY"
+settings.TitleId = "1585E"
+settings.SecretKey = "3ZS9M7TY5NUZNHIFI9YQIEZJWYBTSN6E884AD6HB3KG8JMP31O"
 settings.ApiKey = "OC|7302344786542660|dbf1874a4aa454cdd6142e59ebfd0e55"
 
 
