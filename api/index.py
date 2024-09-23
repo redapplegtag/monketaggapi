@@ -7,8 +7,8 @@ from flask import Flask, jsonify, request
 class GameInfo():
 
     def __init__(self):
-        self.TitleId: str = "1585E"
-        self.SecretKey: str = "3ZS9M7TY5NUZNHIFI9YQIEZJWYBTSN6E884AD6HB3KG8JMP31O"
+        self.TitleId: str = "C11BB"
+        self.SecretKey: str = "DAK4NZC1WK6HKNKSF1PJOGWJJHHOBRG1QQR6UBPNOC1X9R53TY"
         self.ApiKey: str = "OC|7302344786542660|dbf1874a4aa454cdd6142e59ebfd0e55"
 
     def GetAuthHeaders(self) -> dict:
@@ -26,8 +26,8 @@ app: Flask = Flask(__name__)
 playfabCache: dict = {}
 muteCache: dict = {}
 
-settings.TitleId = "1585E"
-settings.SecretKey = "3ZS9M7TY5NUZNHIFI9YQIEZJWYBTSN6E884AD6HB3KG8JMP31O"
+settings.TitleId = "C11BB"
+settings.SecretKey = "DAK4NZC1WK6HKNKSF1PJOGWJJHHOBRG1QQR6UBPNOC1X9R53TY"
 settings.ApiKey = "OC|7302344786542660|dbf1874a4aa454cdd6142e59ebfd0e55"
 
 
@@ -67,7 +67,7 @@ def main():
     return "Made By cycy"
 
 #replace https://auth-prod.gtag-cf.com/api/PlayFabAuthentication with this endpoint
-@app.route('/api/playfabauthenticate', methods=['POST'])
+@app.route('/api/PlayFabAuthentication', methods=['POST'])
 def playfabauth():
     data = request.json
     if data is not None and 'CustomId' not in data:
@@ -175,7 +175,7 @@ def cacheplatfabid():
 
 
 #replace https://title-data.gtag-cf.com with this endpoint
-@app.route("/api/TitleData", methods=["POST", "GET"])
+@app.route("/api/titledata", methods=["POST", "GET"])
 def titledata():
 
     req = requests.post(
