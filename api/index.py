@@ -175,7 +175,7 @@ def cacheplatfabid():
 
 
 #replace https://title-data.gtag-cf.com with this endpoint
-@app.route("/api/titledata", methods=["POST", "GET"])
+@app.route("/api/TitleData", methods=["POST", "GET"])
 def titledata():
 
     req = requests.post(
