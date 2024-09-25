@@ -191,24 +191,11 @@ def PlayFabAuthentication():
             "Message": "More likely banned, I'm too lazy to make it show on the boards because your just banned"
         }), 403
 
-@app.route("/api/CachePlayFabId", methods = ["GET", "POST"]) 
-def cacheplayfabid():
-    idfk = request.get_json()
-    playfabid = idfk.get("SessionTicket").split("-")[0]
-    actually = [
-        "SessionTicket",
-        "Platform"
-    ]
-    if actually not in idfk:
-        return jsonify({
-            "Message": "Try Again Later."
-        }), 404
-
-    else:
-        return jsonify({
-            "Message": "Authed",
-            "PlayFabId": playfabid
-        }), 200
+@app.route("/api/CachePlayFabId", methods=["POST"])
+def cache_playfab_id():
+    rjson = request.get_json()
+    playfab_cache[rjson.get("PlayFabId")] = rjson
+    return jsonify({"Message": "Success"}), 200
 
 @app.route("/api/titledata", methods = ["POST", "GET"]) 
 def bel():
