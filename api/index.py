@@ -120,18 +120,107 @@ def playfab_authentication():
             "ErrorDetails": error_details[first_error]
         }), login_request.status_code
 
-@app.route("/api/CachePlayFabId", methods=["POST"])
-def cache_playfab_id():
-    rjson = request.get_json()
-    playfab_cache[rjson.get("PlayFabId")] = rjson
-    return jsonify({"Message": "Success"}), 200
+# MADE BY SCREAMINGCAT
+@app.route('/api/playfabauthenticate', methods=['POST'])
+def PlayFabAuthentication():
+    data = request.get_json()
 
-@app.route("/api/tdd", methods=["POST", "GET"])
-def title_data():
-    response = requests.post(
-        url=f"https://{settings.TitleId}.playfabapi.com/Server/GetTitleData",
-        headers=settings.get_auth_headers()
+    print(data)
+
+    CustomId : str = data.get("CustomId", "Null")
+    Nonce : str = data.get("Nonce", "Null")
+    OculusId : str = data.get("OculusId", "Null")
+    Platform : str = data.get("Platform", "Null") 
+
+    BLAH = requests.post(
+        url = f"https://{titleider}.playfabapi.com/Server/LoginWithServerCustomId",
+        json = {
+            "ServerCustomId": CustomId,
+            "CreateAccount": True
+        },
+        headers = {
+            "content-type": "application/json",
+            "x-secretkey": settings.SecretKey
+        }
     )
+    if BLAH.status_code == 200:
+        print(f"{colorama.Fore.BLUE} yoo successful login chat!")
+        jsontypeshi = BLAH.json()
+        goodjson = jsontypeshi.get("data")
+        PlayFabId = goodjson.get("PlayFabId")
+        SessionTicket = goodjson.get("SessionTicket")
+        Entity = goodjson.get("EntityToken")
+        EntityToken = Entity["EntityToken"] 
+        EntityId = Entity["Entity"]["Id"]
+        EntityType = Entity["Entity"]["Type"]
+
+        datafr = [
+            PlayFabId,
+            SessionTicket,
+            Entity,
+            EntityToken,
+            EntityId
+        ]
+
+        EASports = requests.post(
+            url = f"https://{titleider}.playfabapi.com/Client/LinkCustomID",
+            json = {
+                "CustomID": CustomId,
+                "ForceLink": True
+            },
+            headers = {
+                "content-type": "application/json",
+                "x-authorization": SessionTicket
+            }
+        )
+        if EASports.status_code == 200:
+            print(f"{colorama.Fore.RED} Ok, linked it ig")
+            return jsonify({
+                "PlayFabId": PlayFabId,
+                "SessionTicket": SessionTicket,
+                "EntityToken": EntityToken,
+                "EntityId": EntityId,
+                "EntityType": EntityType
+            }), 200 
+        else:
+            return jsonify({
+                "Message": "Failed"
+            }), 400
+    else:
+        return jsonify({
+            "Message": "More likely banned, I'm too lazy to make it show on the boards because your just banned"
+        }), 403
+
+@app.route("/api/CachePlayFabId", methods = ["GET", "POST"]) 
+def cacheplayfabid():
+    idfk = request.get_json()
+    playfabid = idfk.get("SessionTicket").split("-")[0]
+    actually = [
+        "SessionTicket",
+        "Platform"
+    ]
+    if actually not in idfk:
+        return jsonify({
+            "Message": "Try Again Later."
+        }), 404
+
+    else:
+        return jsonify({
+            "Message": "Authed",
+            "PlayFabId": playfabid
+        }), 200
+
+@app.route("/api/titledata", methods = ["POST", "GET"]) 
+def bel():
+    realshit = f"https://{titleider}.playfabapi.com/Server/GetTitleData"
+    blah = {
+        "X-SecretKey": secretkey,
+        "Content-Type": "application/json"
+    }
+    e = requests.post(url=realshit, headers=blah)
+    sigmarizzauth = e.json().get("data", "").get("Data", "")
+
+    return jsonify(sigmarizzauth)
 
     if response.status_code == 200:
         return jsonify(response.json().get("data").get("Data"))
