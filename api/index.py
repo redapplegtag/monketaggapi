@@ -12,7 +12,11 @@ baddestnamesever = [
     "CHILDPORN", "P0RN", "CH1LDP0RN", "JERKMATE", "J3RKMATE", "KKKMAN" # u can add more lol
 ]
 
-@app.route("/api/checkforbadname", methods="POST")
+@app.route("/", methods=["POST", "GET"])
+def hub():
+    return "forced to do this stupid ass thing but works ig idk"
+
+@app.route("/api/checkforbadname", methods=["POST"])
 def start():
     name = requests.get_json().get("FunctionArgument", {}).get("name")
     room = requests.get_json().get("FunctionArgument", {}).get("forRoom")
