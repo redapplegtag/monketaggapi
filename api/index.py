@@ -1,5 +1,5 @@
 import flask
-from flask import Flask, requests, jsonify
+from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
@@ -18,8 +18,8 @@ def hub():
 
 @app.route("/api/checkforbadname", methods=["POST"])
 def start():
-    name = requests.get_json().get("FunctionArgument", {}).get("name")
-    room = requests.get_json().get("FunctionArgument", {}).get("forRoom")
+    name = request.get_json().get("FunctionArgument", {}).get("name")
+    room = request.get_json().get("FunctionArgument", {}).get("forRoom")
 
     if name in baddestnamesever():
         return jsonify ({
@@ -29,6 +29,3 @@ def start():
         return jsonify({
             "result": 0
         })
-
-if __name__ == '__main__':
-  app.run(host='0.0.0.0', port=8080)
